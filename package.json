@@ -4,8 +4,8 @@
   "description": "E-learning backend code",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
   },
   "author": "Awoleye Bolaji (Bas15/aval_stephen)",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "colors": "^1.4.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-async-handler": "^1.2.0",
     "mongoose": "^8.5.1",
     "uuid": "^10.0.0"
   }
