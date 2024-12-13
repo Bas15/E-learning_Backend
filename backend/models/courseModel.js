@@ -1,7 +1,15 @@
 const mongoose = require("mongoose");
 
+const categoryEnum = ["self-paced", "instructor-led"];
+const currencyEnum = ["USD", "NGN", "GBP", "EUR"];
+
 const courseSchema = mongoose.Schema(
   {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
     title: {
       type: String,
       required: [true, "please add a title"],
@@ -20,7 +28,11 @@ const courseSchema = mongoose.Schema(
     },
     currency: {
       type: String,
-      required: [true, "please add currency"]
+      required: [true, "please add currency"],
+      enum: {
+        values: currencyEnum,
+        message: "{VALUE} is not a valid currency",
+      },
     },
     price: {
       type: Number,
@@ -28,6 +40,26 @@ const courseSchema = mongoose.Schema(
     },
     link: {
       type: String,
+    },
+    image: {
+      type: String,
+      required: [true, "include Course image"],
+    },
+    category: {
+      type: String,
+      required: [true, "include a category"],
+      enum: {
+        values: categoryEnum,
+        message: "{VALUE} is not a valid category",
+      },
+    },
+    takeAways: {
+      type: [String],
+      required: [true, "add Take-aways"],
+    },
+    audience: {
+      type: String,
+      required: [true, "include target audience"],
     },
   },
   {
