@@ -30,7 +30,8 @@ const registerUser = asyncHandler(async (req, res) => {
     return res.status(400).json({ success: false, errors: errors.array() });
   }
 
-  const { firstName, lastName, phone, userName, email, password } = req.body;
+  const { firstName, lastName, phone, userName, email, password, role } =
+    req.body;
 
   const userExist = await User.findOne({ email });
   if (userExist) {
@@ -49,11 +50,13 @@ const registerUser = asyncHandler(async (req, res) => {
     userName,
     email,
     password: hashedPassword,
+    role,
   });
 
   if (user) {
     res.status(201).json({
       success: true,
+      message: "user registered successfully!",
       data: {
         _id: user.id,
         firstName: user.firstName,
@@ -61,6 +64,7 @@ const registerUser = asyncHandler(async (req, res) => {
         phone: user.phone,
         userName: user.userName,
         email: user.email,
+        role: user.role,
         token: generateToken(user._id),
       },
     });
@@ -91,6 +95,7 @@ const loginUser = asyncHandler(async (req, res) => {
         phone: user.phone,
         userName: user.userName,
         email: user.email,
+        role: user.role,
         token: generateToken(user._id),
       },
     });
