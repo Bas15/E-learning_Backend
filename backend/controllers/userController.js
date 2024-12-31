@@ -40,6 +40,13 @@ const registerUser = asyncHandler(async (req, res) => {
       .json({ success: false, message: "User already exists" });
   }
 
+  const userNameExist = await User.findOne({ userName });
+  if (userNameExist) {
+    return res
+      .status(400)
+      .json({ success: false, message: "UserName already exists" });
+  }
+
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -56,7 +63,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (user) {
     res.status(201).json({
       success: true,
-      message: "user registered successfully!",
+      message: "User registered successfully!",
       data: {
         _id: user.id,
         firstName: user.firstName,
@@ -88,6 +95,7 @@ const loginUser = asyncHandler(async (req, res) => {
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       success: true,
+      message: "Signed in successfully",
       data: {
         _id: user.id,
         firstName: user.firstName,
